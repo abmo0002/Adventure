@@ -85,9 +85,10 @@ public class Room {
         return itemInRoom;
     }
 
+    @Override
     public String toString() {
-        return roomName + "\n" +
-                "Room description: " + description + "\n";
+        return "" + roomName +"\n" +
+                "Description: " + description + "\n" +
+                "Items in room: " + itemInRoom;
     }
-
 }

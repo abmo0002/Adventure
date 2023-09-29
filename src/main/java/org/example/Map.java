@@ -7,15 +7,15 @@ public class Map {
         public void buildMap() {
 
 
-            Room room1 = new Room("Aria's Room", "Aria's room is gloomy and eerie. The cement walls are covered in dark stains, and there is only faint lighting from a single hanging light bulb. ");
-            Room room2 = new Room("Hanna's Room", "Hanna's room is like a scene from a nightmarish theater production. The walls are painted in dark hues, and there are designer handbags hanging on hooks all around.");
-            Room room3 = new Room("Emily's Room", "Emily's room is filled with dark shadows and the sound of faint whispers from her dead father. Strange paintings hang on the walls, seeming to change when not looked at directly ");
-            Room room4 = new Room("Spencer's Room","Spencer's room is filled with eerie antiques and dark furniture. The walls are angular and harsh, and there are old, creaking mirrors hanging, reflecting a skewed and distorted version of the room");
-            Room room5 = new Room("Dilaurentis Living Room", "The living room is cloaked in a suffocating darkness, and every corner seems to harbor a dark secret.");
-            Room room6 = new Room("Morgue", "The morgue is a cold, clinical environment, designed for the solemn purpose of handling the deceased. The walls are painted in pale, neutral colors.");
-            Room room7 = new Room("The Hole", "The Hole is a pit dug into the ground, it is a horrifying and sinister space, designed to confine and isolate individuals against their will.");
-            Room room8 = new Room("The Torture Room", "The  torture room exudes an aura of unspeakable suffering, bearing witness to the horrors that have unfolded within its confines. ");
-            Room room9 = new Room("Charles' vault", "Charles's vault is a room in which are kept A's most precious and treasured things.");
+            Room room1 = new Room(" Aria's Room", "Aria's room is gloomy and eerie. The cement walls are covered in dark stains, and there is only faint lighting from a single hanging light bulb. ");
+            Room room2 = new Room(" Hanna's Room", "Hanna's room is like a scene from a nightmarish theater production. The walls are painted in dark hues, and there are designer handbags hanging on hooks all around.");
+            Room room3 = new Room(" Emily's Room", "Emily's room is filled with dark shadows and the sound of faint whispers from her dead father. Strange paintings hang on the walls, seeming to change when not looked at directly ");
+            Room room4 = new Room(" Spencer's Room","Spencer's room is filled with eerie antiques and dark furniture. The walls are angular and harsh, and there are old, creaking mirrors hanging, reflecting a skewed and distorted version of the room");
+            Room room5 = new Room(" Dilaurentis Living Room", "The living room is cloaked in a suffocating darkness, and every corner seems to harbor a dark secret.");
+            Room room6 = new Room(" Morgue", "The morgue is a cold, clinical environment, designed for the solemn purpose of handling the deceased. The walls are painted in pale, neutral colors.");
+            Room room7 = new Room(" The Hole", "The Hole is a pit dug into the ground, it is a horrifying and sinister space, designed to confine and isolate individuals against their will.");
+            Room room8 = new Room(" The Torture Room", "The  torture room exudes an aura of unspeakable suffering, bearing witness to the horrors that have unfolded within its confines. ");
+            Room room9 = new Room(" Charles' vault", "Charles's vault is a room in which are kept A's most precious and treasured things.");
 
             currentRoom = room1;
 
