@@ -1,10 +1,12 @@
 package org.example;
+
 import java.util.ArrayList;
 
 public class Adventure {
 
     Map map = new Map();
     Player player = new Player();
+
 
     public Adventure() {
     }
@@ -24,10 +26,7 @@ public class Adventure {
     public void moveAround(String input) {
         player.getMoveAround(input);
     }
-    public void showInventory() {
-        player.showInventory();
 
-    }
 
     public void takeItemToInventory(String input) {
         player.takeItem(input);
@@ -39,9 +38,12 @@ public class Adventure {
 
     }
 
-
-    public String look() {
-        return map.look();
+    public ArrayList<Item> showItemsInRoom() {
+        return player.getCurrentRoom().showItemsInRoom();
     }
-}
 
+    public ArrayList<Item> showInventory() {
+        return player.showInventory();
+    }
+
+}

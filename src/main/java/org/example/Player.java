@@ -3,41 +3,34 @@ package org.example;
 import java.util.ArrayList;
 
 public class Player {
-    Item item = new Item();
-
     private Room currentRoom;
-    private ArrayList<Item> inventory = new ArrayList<>(5);
+    private final ArrayList<Item> inventory = new ArrayList<>();
 
     public Player() {
-
     }
+
 
     public void moveAround(String direction) {
 
-        if (direction.equalsIgnoreCase("go north")) {
-
+        if (direction.equalsIgnoreCase("north") || direction.equalsIgnoreCase("n")) {
             if (currentRoom.getNorth() == null) {
-                System.out.println("You can not go that way");
-            } else
-                currentRoom = currentRoom.getNorth();
+                System.out.println("You cannot go that way");
+            } else currentRoom = currentRoom.getNorth();
 
-        } else if (direction.equalsIgnoreCase("go south")) {
+        } else if (direction.equalsIgnoreCase("south") || direction.equalsIgnoreCase("s")) {
             if (currentRoom.getSouth() == null) {
-                System.out.println("You can not go that way");
-            } else
-                currentRoom = currentRoom.getSouth();
+                System.out.println("You cannot go that way");
+            } else currentRoom = currentRoom.getSouth();
 
-        } else if (direction.equalsIgnoreCase("go east")) {
+        } else if (direction.equalsIgnoreCase("east") || direction.equalsIgnoreCase("e")) {
             if (currentRoom.getEast() == null) {
-                System.out.println("You can not go that way");
-            } else
-                currentRoom = currentRoom.getEast();
+                System.out.println("You cannot go that way");
+            } else currentRoom = currentRoom.getEast();
 
-        } else if (direction.equalsIgnoreCase("go west")) {
+        } else if (direction.equalsIgnoreCase("west") || direction.equalsIgnoreCase("w")) {
             if (currentRoom.getWest() == null) {
-                System.out.println("You can not go that way");
-            } else
-                currentRoom = currentRoom.getWest();
+                System.out.println("You cannot go that way");
+            } else currentRoom = currentRoom.getWest();
         }
     }
 
@@ -51,37 +44,32 @@ public class Player {
 
     public void setCurrentRoom(Room setRoom) {
         this.currentRoom = setRoom;
-
     }
 
-    public boolean takeItem(String takeItem) {
-        for (Item item : currentRoom.getItems()) {
-            if (item.getItemName().toLowerCase().equals(takeItem)) {
-                inventory.add(item);
-                currentRoom.getItems().remove(item);
-                return true;
-            }
+
+    public void takeItem(String takeItem) {
+        Item itemToTake = currentRoom.removeItemFromRoom(takeItem);
+        if (itemToTake != null) {
+            inventory.add(itemToTake);
+            System.out.println("\nYou picked up " + itemToTake);
         }
-        return false;
     }
 
-    public Item dropItem(String dropItem) {
+    public void dropItem(String dropItem) {
+        Item dropItemInRoom = null;
         for (Item item : inventory) {
-            if (item.getItemName().contains(dropItem)) {
-                inventory.remove(new Item(dropItem));
-                currentRoom.leftedItem(dropItem);
-                return item;
-            } else
-                System.out.println("I can not find " + dropItem + "in the inventory...");
+            if (item.getItemName().toLowerCase().contains(dropItem.toLowerCase())) {
+                dropItemInRoom = item;
+                currentRoom.dropItemInRoom(item);
+            } else System.out.println("You don't have anything like" + dropItem + " in your inventory...");
         }
-        return null;
+        inventory.remove(dropItemInRoom);
+        if (inventory.isEmpty()) {
+
+        }
     }
 
     public ArrayList<Item> showInventory() {
         return inventory;
     }
-
 }
-
-
-

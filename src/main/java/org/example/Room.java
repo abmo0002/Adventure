@@ -3,25 +3,21 @@ package org.example;
 import java.util.ArrayList;
 
 public class Room {
-    private String roomName;
-    private String description;
+    private final String name;
+    private final String description;
     private Room north;
     private Room south;
     private Room east;
     private Room west;
+    private final ArrayList<Item> itemInRoom = new ArrayList<>(5);
 
-    private ArrayList<Item> itemInRoom = new ArrayList<>(5);
-
-    Item item = new Item();
-
-
-    public Room(String roomName, String description) {
-        this.roomName = roomName;
+    public Room(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
-    public String getRoomName() {
-        return roomName;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
@@ -61,9 +57,8 @@ public class Room {
         this.west = newRoom;
     }
 
-
-    public void leftedItem(String leftItem) {
-        itemInRoom.add(new Item(leftItem));
+    public void dropItemInRoom(Item dropedItem) {
+        itemInRoom.add(dropedItem);
     }
 
     public void addItemToRoom(Item addItem) {
@@ -72,23 +67,23 @@ public class Room {
 
     public Item removeItemFromRoom(String removeItem) {
         for (Item item : itemInRoom) {
-            if (item.getItemName().contains(removeItem)) {
-                itemInRoom.remove(new Item(removeItem));
+            if (item.getItemName().toLowerCase().contains(removeItem.toLowerCase())) {
+                itemInRoom.remove(item);
                 return item;
             } else
-                System.out.println(removeItem + "does not exist in the room..");
+                System.out.println(removeItem + " doesn't exist");
         }
+        System.out.println("I can't take the following item");
         return null;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<Item> showItemsInRoom() {
         return itemInRoom;
     }
 
-    @Override
     public String toString() {
-        return "" + roomName +"\n" +
-                "Description: " + description + "\n" +
-                "Items in room: " + itemInRoom;
+        return name + "\n" +
+                "Room description: " + description + "\n";
     }
+
 }

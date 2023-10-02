@@ -3,12 +3,14 @@ package org.example;
 public class Item {
     private String itemName;
 
-    public Item (){}
-    public Item(String itemName){
+    public Item() {
+    }
+
+    public Item(String itemName) {
         this.itemName = itemName;
     }
 
-    public String getItemName(){
+    public String getItemName() {
         return itemName;
     }
 
