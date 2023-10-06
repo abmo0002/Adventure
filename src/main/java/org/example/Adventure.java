@@ -46,4 +46,24 @@ public class Adventure {
         return player.showInventory();
     }
 
+    public ReturnMessage eatFood(String foodToEat) {
+        return player.eatFood(foodToEat);
+    }
+    public ReturnMessage drink(String liquidToDrink){
+        return player.drinkLiquid(liquidToDrink);
+    }
+
+
+    public int getPlayerHealth() {
+        return player.getHealth();
+    }
+
+
+    public Item findItem(String name) {
+        return player.findItem(name);
+    }
+    public ArrayList<Item> itemsInRoom() {
+        return player.getItemName();
+    }
+
 }

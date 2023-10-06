@@ -81,6 +81,7 @@ public class Room {
         return itemInRoom;
     }
 
+
     public String toString() {
         return name + "\n" +
                 "Room description: " + description + "\n";
