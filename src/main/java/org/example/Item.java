@@ -4,8 +4,6 @@ public class Item {
     private String itemName;
     private String description;
 
-    public Item() {
-    }
 
     public Item(String itemName, String description) {
         this.itemName = itemName;
@@ -13,22 +11,22 @@ public class Item {
     }
 
     public Item(String itemName) {
-
+        this.itemName = itemName;
     }
 
     public String getItemName() {
         return itemName;
     }
 
+
     public String getDescription() {
         return description;
     }
-public Item(String itemName, int healthPoints){
 
-}
+
     public String toString() {
 
-        return description + " " + itemName ;
+        return itemName;
     }
 
 

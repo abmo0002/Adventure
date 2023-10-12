@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 
+
 public class Room {
     private final String name;
     private final String description;
@@ -9,7 +10,9 @@ public class Room {
     private Room south;
     private Room east;
     private Room west;
+
     private final ArrayList<Item> itemInRoom = new ArrayList<>(5);
+    private final ArrayList<Enemy>listOfEnemies = new ArrayList<>();
 
     public Room(String name, String description) {
         this.name = name;
@@ -65,13 +68,25 @@ public class Room {
         itemInRoom.add(addItem);
     }
 
+    public ArrayList<Enemy> getListOfEnemies() {
+        return listOfEnemies;
+    }
+
+    public void addEnemy(Enemy addEnemy) {
+        listOfEnemies.add(addEnemy);
+    }
+
+    public void removeEnemyFromRoom(Enemy removeEnemyFromRoom) {
+        listOfEnemies.remove(removeEnemyFromRoom);
+    }
+
+
     public Item removeItemFromRoom(String removeItem) {
         for (Item item : itemInRoom) {
             if (item.getItemName().toLowerCase().contains(removeItem.toLowerCase())) {
                 itemInRoom.remove(item);
                 return item;
-            } else
-                System.out.println(removeItem + " doesn't exist");
+            }
         }
         System.out.println("I can't take the following item");
         return null;
@@ -86,5 +101,4 @@ public class Room {
         return name + "\n" +
                 "Room description: " + description + "\n";
     }
-
 }

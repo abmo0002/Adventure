@@ -7,12 +7,13 @@ public class Food extends Item {
     public int healthPoints;
 
 
-    public Food(String name, String description, int healthPoints) {
-        super(name,description);
+    public Food(String itemName, String description, int healthPoints) {
+        super(itemName,description);
         this.healthPoints = healthPoints;
 
     }
     public int getHealthPoints(){
+
         return healthPoints;
     }
 

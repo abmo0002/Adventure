@@ -1,24 +1,24 @@
 package org.example;
 
 public class MeeleWeapon extends Weapon {
+    public int damage;
 
-    MeeleWeapon(String itemName, int damage, int remainingUses) {
-        super(itemName, damage, remainingUses);
+    MeeleWeapon(String itemName, int damage) {
+        super(itemName, damage);
+        this.damage = damage;
     }
 
-    @Override
     public int getDamage() {
         return damage;
     }
 
     @Override
-    public int getRemainingUses() {
-        return remainingUses;
+    public String toString() {
+        return "\n" + " " + "MeleeWeapon:" + "damage=" + damage + '}';
     }
 
-    @Override
-    public void setRemainingUses(int remainingUses) {
-        this.remainingUses = remainingUses;
-    }
+
+
+
 }
 

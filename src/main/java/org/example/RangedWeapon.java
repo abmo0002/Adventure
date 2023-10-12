@@ -1,25 +1,29 @@
 package org.example;
-
 public class RangedWeapon extends Weapon {
+    public int ammunition;
     int remainingUses;
 
-    RangedWeapon(String itemName, int damage, int remainingUses) {
-        super(itemName, damage, remainingUses);
+    public RangedWeapon(String itemName, int damage, int ammunition, int remainingUses) {
+        super(itemName, damage);
+        this.ammunition = ammunition;
+        this.remainingUses = remainingUses;
     }
 
-    @Override
-    public int getDamage() {
-        return damage;
+    public int getAmmunition() {
+        return ammunition;
     }
 
-    @Override
     public int getRemainingUses() {
         return remainingUses;
     }
 
-    @Override
-    public void setRemainingUses(int remainingUses) {
-        this.remainingUses = remainingUses;
-    }
 
+
+    @Override
+    public String toString() {
+        return "\n" +  "Ranged Weapon:" + " " + getItemName() + "," + "\n" +
+                "Ammunition" + " " + "=" + " " + " " + ammunition +
+                ", Use left:" + " " + "=" + " " + remainingUses +
+                ',';
+    }
 }

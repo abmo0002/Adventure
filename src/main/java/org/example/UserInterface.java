@@ -15,14 +15,15 @@ public class UserInterface {
 
         controller.buildMap();
         controller.setCurrentRoom();
-        System.out.println("\n" + ConsoleColors.RED_BOLD_BRIGHT+"WELCOME TO A'S DOLLHOUSE #A!" +ConsoleColors.RESET);
-        System.out.println( "\n"+ ConsoleColors.RED_BOLD_BRIGHT +"Write help for a list of instructions" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.RED_BOLD_BRIGHT + "WELCOME TO A'S DOLLHOUSE #A!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.RED_BOLD_BRIGHT + "Write help for a list of instructions" + ConsoleColors.RESET);
 
 
         do {
             System.out.print("You are in the following room: ");
             System.out.println(controller.getCurrentRoom());
             System.out.println("In this room I see the following items:\n" + controller.showItemsInRoom());
+            System.out.println("\n" + ConsoleColors.RED_BOLD_BRIGHT + "In this room I see this enemy:\n" + controller.getCurrentRoom().getListOfEnemies() + "\n" + ConsoleColors.RESET);
 
             System.out.println("\nWhat is your next move? ");
             input = scanner.nextLine();
@@ -36,6 +37,7 @@ public class UserInterface {
             } else if (commands.length == 2) {
                 userInputs = commands[0];
                 userChoice = commands[1];
+
             } else if (commands.length == 3) {
                 userInputs = commands[0];
                 userChoice = commands[1] + " " + commands[2];
@@ -48,40 +50,99 @@ public class UserInterface {
                 case "west", "w" -> controller.moveAround(input);
                 case "inventory" ->
                         System.out.println("\nIn your inventory there is following: \n" + controller.showInventory() + "\n");
+
                 case "take" -> controller.takeItemToInventory(userChoice);
+
+
                 case "drop" -> controller.dropItemFromInventory(userChoice);
+
                 case "eat" -> {
-                    ReturnMessage returnValueOfFood = controller.player.eatFood(userChoice);
-                    if (returnValueOfFood == ReturnMessage.OK) {
-                        System.out.println("*eating " + userChoice + "*");
+                    ReturnMessage returnValueOfFood = controller.tryToEatFood(userChoice);
+
+                    String answer = "";
+                    if (returnValueOfFood == ReturnMessage.REALLY_EAT) {
+                        System.out.println("That does not look healthy do you really want to eat it? [yes/no]");
+                        while (!scanner.hasNextLine()) {
+                            System.out.println("You cant enter anything but characters");
+                            scanner.nextLine();
+                        }
+                        answer = scanner.nextLine();
+
+                    }
+                    if (answer.equalsIgnoreCase("yes")) {
+                        controller.eatFood(userChoice);
+                        System.out.println("*you have now eaten " + userChoice + " ");
+                    } else if (returnValueOfFood == ReturnMessage.REALLY_EAT)
+                        System.out.println("okay i wont eat it");
+
+
+                    if (returnValueOfFood == ReturnMessage.EATABLE) {
+                        System.out.println("You have now eaten " + userChoice + " ");
                     } else if (returnValueOfFood == ReturnMessage.NOT_FOUND) {
                         System.out.println("I can't find " + userChoice + " in the inventory");
                     } else if (returnValueOfFood == ReturnMessage.NOT_EATABLE) {
-                        System.out.println(userChoice + " is not edible...\n");
+                        System.out.println(userChoice + " is not edible\n");
                     }
                 }
                 case "drink" -> {
-                    ReturnMessage returnValueOfLiquid = controller.drink(userChoice);
-                    if (returnValueOfLiquid == ReturnMessage.OK) {
-                        System.out.println("*drinking " + userChoice + "*");
-                    } else if (returnValueOfLiquid == ReturnMessage.NOT_FOUND) {
-                        System.out.println("I can't find " + userChoice + " in the inventory");
-                    } else if (returnValueOfLiquid == ReturnMessage.NOT_EATABLE) {
-                        System.out.println(userChoice + " cannot be drank...\n");
+                    ReturnMessage returnValueOfLiquid = controller.tryToDrinkLiquid(userChoice);
+
+
+                    String answer = "";
+                    if (returnValueOfLiquid == ReturnMessage.REALLY_DRINK) {
+                        System.out.println("That does not look healthy do you really want to drink that? [yes/no]");
+                        while (!scanner.hasNextLine()) {
+                            System.out.println("You cant enter anything but characters");
+                            scanner.nextLine();
+                        }
+                        answer = scanner.nextLine();
                     }
+                    if (answer.equalsIgnoreCase("yes")) {
+                        controller.drink(userChoice);
+                        System.out.println("*drinking " + userChoice + "*");
+                    } else if (returnValueOfLiquid == ReturnMessage.REALLY_DRINK)
+                        System.out.println("okay i won't drink it anyway...");
+
+
+                    if (returnValueOfLiquid == ReturnMessage.EATABLE) {
+                        System.out.println("*drinking " + userChoice + "*");
+                    } else if (returnValueOfLiquid == ReturnMessage.NOT_EATABLE) {
+                        System.out.println("I can't find " + userChoice + " in the inventory");
+                    } else if (returnValueOfLiquid == ReturnMessage.NOT_DRINKABLE) {
+                        System.out.println(userChoice + " is not drinkable...\n");
+                    }
+                }
+
+                case "equip" -> {
+
+                    ReturnMessage isEquipped = controller.equipWeapon(userChoice);
+                    if (isEquipped == ReturnMessage.IS_EQUIPPED) {
+                        System.out.println("\nYou have equipped " + controller.equipWeapon(userChoice) + "\n");
+                    }
+                    if (isEquipped == ReturnMessage.NOT_A_WEAPON) {
+                        System.out.println("\nYou can not equip " + controller.equipWeapon(userChoice) + " because it's not a weapon\n");
+                    }
+                    if (isEquipped == ReturnMessage.NOT_FOUND) {
+                        System.out.println("\nNo weapon was found with the name " + userChoice + " in the inventory\n");
+                    }
+
                 }
                 case "health" -> {
-                    controller.getPlayerHealth();
-                    if (controller.getPlayerHealth() == 100 && controller.getPlayerHealth()>50) {
-                        System.out.println("Health: " + controller.getPlayerHealth() + " - you are in good health, but avoid fighting right now.\n");
-                    } else if (controller.getPlayerHealth() <= 50 && controller.getPlayerHealth() >35) {
-                        System.out.println("Health: " + controller.getPlayerHealth() + " - you are not in the best of shape. You should eat some food and rest\n");
-                    } else if (controller.getPlayerHealth()<=35 && controller.getPlayerHealth()>20) {
-                        System.out.println("Health: " + controller.getPlayerHealth() + " - you are in poor condition, consider eating some food and rest up\n");
-                    } else if (controller.getPlayerHealth() <= 20 && controller.getPlayerHealth() > 0) {
-                        System.out.println("Health: " + controller.getPlayerHealth() + " - you are in extremely poor condition, eat tons of food and take a long rest\n");
+
+                    int playerHealth = controller.getPlayerHealth();
+                    if (playerHealth == 100 && playerHealth > 50) {
+                        System.out.println("Health: " + playerHealth + " - you are in good health, but avoid fighting for right now.\n");
+                    } else if (playerHealth <= 50 && playerHealth > 35) {
+                        System.out.println("Health: " + playerHealth + " - you are not in the best of shape. You should eat better foods\n");
+                    } else if (playerHealth <= 35 && playerHealth > 20) {
+                        System.out.println("Health: " + playerHealth + " - you are in poor condition, consider eating some food and resting\n");
+                    } else if (playerHealth <= 20 && playerHealth > 0) {
+                        System.out.println("Health: " + playerHealth + " - you are in extremely poor condition, eat tons of food \n");
                     }
+                    System.out.println("Player's health after eating is:  " + playerHealth);
+
                 }
+
                 case "help" -> System.out.println("""
                         If you want to go North, write: "North"
                         If you want to go East, write: "East"

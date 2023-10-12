@@ -2,14 +2,23 @@ package org.example;
 
 import java.util.ArrayList;
 
+
 public class Player {
     private Room currentRoom;
     private final ArrayList<Item> inventory = new ArrayList<>();
     private int health = 50;
+    private RangedWeapon rangedWeapon;
+    private Item pickedUpItem;
     private Weapon equippedWeapon;
     private ReturnMessage checkWeapon;
+    private int Ammunition;
+    private int remainingUses;
+    private int damage;
+    private String enemykilled;
+   private int enemyHealth;
 
-    public void moveAround(String direction) {
+    public void
+    moveAround(String direction) {
 
         if (direction.equalsIgnoreCase("north") || direction.equalsIgnoreCase("n")) {
             if (currentRoom.getNorth() == null) {
@@ -37,6 +46,14 @@ public class Player {
         return currentRoom;
     }
 
+    public int remainingUses() {
+        return remainingUses;
+    }
+
+    public int damage() {
+        return damage();
+    }
+
     public void getMoveAround(String input) {
         moveAround(input);
     }
@@ -49,21 +66,33 @@ public class Player {
         this.currentRoom = setRoom;
     }
 
-    public ReturnMessage eatFood(String food) {
-        if (inventory.isEmpty()) {
-            Item temp;
-            for (Item item : inventory) {
-                if (item.getItemName().toLowerCase().contains(food.toLowerCase())) {
-                    temp = item;
-                    if (temp instanceof Food) {
-                        health += ((Food) temp).getHealthPoints();
-                        inventory.remove(food);
+    public void setEquippedWeapon(Weapon equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
 
-                    } else
+    public Weapon getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public int getAmmunition() {
+        return Ammunition;
+    }
+
+    public ReturnMessage eatFood(String eatfood) {
+        if (inventory.isEmpty()) {
+            return ReturnMessage.NOT_FOUND;
+        } else {
+
+            for (Item item : inventory) {
+                if (item.getItemName().toLowerCase().contains(eatfood.toLowerCase())) {
+                    if (item instanceof Food food) {
+                        health += food.getHealthPoints();
+                        inventory.remove(food);
                         return ReturnMessage.EATABLE;
 
-                } else
-                    return ReturnMessage.NOT_EATABLE;
+                    } else
+                        return ReturnMessage.NOT_EATABLE;
+                }
             }
         }
         return ReturnMessage.NOT_FOUND;
@@ -71,24 +100,39 @@ public class Player {
 
 
     public ReturnMessage drinkLiquid(String drinkLiquid) {
+        Item itemfound = null;
+
         if (inventory.isEmpty()) {
             return ReturnMessage.NOT_FOUND;
-
         } else {
             for (Item item : inventory) {
                 if (item.getItemName().toLowerCase().contains(drinkLiquid.toLowerCase())) {
                     if (item instanceof Liquid) {
                         Liquid liquid = (Liquid) item;
+                        System.out.println(liquid.getHealthPoints());
+                        System.out.println(health);
                         health += liquid.getHealthPoints();
-                        inventory.remove(liquid);
-                    } else return ReturnMessage.EATABLE;
-                } else return ReturnMessage.NOT_DRINKABLE;
+                        itemfound = item; // Add item to itemsToRemove list.
+
+                    } else {
+                        return ReturnMessage.REALLY_DRINK;
+                    }
+                } else {
+                    return ReturnMessage.NOT_DRINKABLE;
+                }
             }
+
+            // Remove items after finishing iteration.
+            inventory.remove(itemfound);
         }
         return ReturnMessage.NOT_FOUND;
     }
 
+
     public ReturnMessage tryToEatFood(String eatFood) {
+        boolean removeItem = false;
+        Item itemfound = null;
+
         if (inventory.isEmpty()) {
             return ReturnMessage.NOT_FOUND;
         } else {
@@ -99,12 +143,18 @@ public class Player {
                             return ReturnMessage.REALLY_EAT;
                         } else {
                             health += food.getHealthPoints();
-                            inventory.remove(food);
-                            return ReturnMessage.EATABLE;
+                            itemfound = item;
+                            removeItem = true;
+
                         }
+
                     } else
                         return ReturnMessage.NOT_EATABLE;
                 }
+            }
+            if (removeItem == true) {
+                inventory.remove(itemfound);
+                return ReturnMessage.EATABLE;
             }
         }
         return ReturnMessage.NOT_FOUND;
@@ -138,7 +188,12 @@ public class Player {
         if (itemToTake != null) {
             inventory.add(itemToTake);
             System.out.println("\nYou picked up " + itemToTake);
+
         }
+    }
+
+    public Item getPickedUpItem() {
+        return pickedUpItem;
     }
 
     public void dropItem(String dropItem) {
@@ -166,6 +221,7 @@ public class Player {
         return currentRoom.showItemsInRoom();
     }
 
+
     public Item findItem(String name) {
         for (Item item : inventory) {
             if (item.getItemName().startsWith(name)) {
@@ -174,54 +230,20 @@ public class Player {
         }
         return null;
 
+    }
 
+    public Item FindItemInRoom(String itemName) {
+        for (Item item : currentRoom.showItemsInRoom()) {
+
+            if (item.getItemName().equalsIgnoreCase(itemName)) {
+
+            }
+            return item;
+        }
+        return null;
     }
 
     @Override
     public String toString() {
         return "Player{" + "currentRoom=" + currentRoom + '}';
-    }
-
-
-    public ArrayList<Item> getItemName() {
-        return getItemName();
-    }
-
-    public ReturnMessage attack() {
-        if (checkWeapon == ReturnMessage.IS_EQUIPPED) {
-            if (equippedWeapon.getRemainingUses() > 0) {
-                equippedWeapon.getDamage();
-                equippedWeapon.setRemainingUses(equippedWeapon.getRemainingUses() - 1);
-                return ReturnMessage.ATTACK;
-            } else if (equippedWeapon.getRemainingUses() == 0) {
-                return ReturnMessage.NO_AMMO;
-            }
-        }
-        return ReturnMessage.IS_NOT_EQUIPPED;
-    }
-
-    public int getDamageDone() {
-        return equippedWeapon.getDamage();
-    }
-
-    public ReturnMessage equipWeapon(String itemName) {
-        for (Item item : inventory) {
-            if (item.getItemName().toLowerCase().contains(itemName.toLowerCase())) {
-                if (item instanceof Weapon) {
-                    equippedWeapon = (Weapon) item;
-                    checkWeapon = ReturnMessage.IS_EQUIPPED;
-                    return ReturnMessage.IS_EQUIPPED;
-                } else
-                    return ReturnMessage.IS_NOT_A_WEAPON;
-            }
-        }
-        return ReturnMessage.NOT_FOUND;
-    }
-
-    public Weapon getEquippedWeapon() {
-        return equippedWeapon;
-    }
-
-
-}
-
+    }}

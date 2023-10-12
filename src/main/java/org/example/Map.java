@@ -25,10 +25,16 @@ public class Map {
         room1.setNorth(null);
         room1.setSouth(room4);
         room1.setWest(null);
-        room1.addItemToRoom(new Item("plastic books","A couple of"));
-        room1.addItemToRoom(new Item("paint brushes","Dirty"));
-        room1.addItemToRoom(new Food("Crackers,", "Dry", 50));
-        room1.addItemToRoom(new Liquid("Poison", "deadly", -100));
+        room1.addItemToRoom(new Item("plastic books", "A couple of"));
+        room1.addItemToRoom(new Item("paint brushes", "Dirty"));
+
+        Food crackers = new Food("crackers,", "dry", 3);
+        room1.addItemToRoom(crackers);
+
+
+        Liquid poison = new Liquid("poison", "poisonous", -30);
+        room1.addItemToRoom(poison);
+
 
         room2.setEast(room3);
         room2.setNorth(null);
@@ -36,24 +42,37 @@ public class Map {
         room2.setWest(room1);
         room2.addItemToRoom(new Item("designer bags", "Expensive"));
         room2.addItemToRoom(new Item("chanel sunglasses", "Trendy"));
-        room2.addItemToRoom(new Food("canned tuna ,", "Moldy", -50));
+
+        RangedWeapon weapon2 = new RangedWeapon("Gun", 10, 3, 3);
+        room2.addItemToRoom(weapon2);
+
+
+        Food tuna = new Food("canned tuna ,", "moldy", -50);
+        room2.addItemToRoom(tuna);
+        Enemy Monster= new Enemy ("Monster(A)",50, new Weapon("Dagger",4));
+        room2.addEnemy(Monster );
 
         room3.setEast(null);
         room3.setNorth(null);
         room3.setSouth(room6);
         room3.setWest(room2);
-        room3.addItemToRoom(new Item("magazines","Vogue"));
-        room3.addItemToRoom(new Item("medals","Shiny"));
-        room3.addItemToRoom(new Food("protein bar ,", "Expired", -50));
+        room3.addItemToRoom(new Item("magazines", "Vogue"));
+        room3.addItemToRoom(new Item("medals", "Shiny"));
+
+        Food proteinBar = new Food("protein bar ,", "Expired", 70);
+        room3.addItemToRoom(proteinBar);
+
+        RangedWeapon weapon3 = new RangedWeapon("gun", 100, 4, 2);
+        room3.addItemToRoom(weapon3);
 
 
         room4.setEast(null);
         room4.setNorth(room1);
         room4.setSouth(room7);
         room4.setWest(null);
-        room4.addItemToRoom(new Item("awards","Polished"));
+        room4.addItemToRoom(new Item("awards", "Polished"));
         room4.addItemToRoom(new Item("chair", "Creaky old"));
-        room4.addItemToRoom(new Food("instant noodles ,",  "Pig feet flavoured ", 50));
+        room4.addItemToRoom(new Food("instant noodles ,", "Pig feet flavoured ", 50));
 
 
         room5.setEast(null);
@@ -62,6 +81,7 @@ public class Map {
         room5.setWest(null);
         room5.addItemToRoom(new Item("keys", " A key to the room"));
         room5.addItemToRoom(new Item("Books", "Effective self help"));
+
         room5.addItemToRoom(new Food("liquid sedative ,", "Deadly", 50));
 
         room6.setEast(null);
@@ -83,6 +103,8 @@ public class Map {
         room8.setWest(room7);
         room8.addItemToRoom(new Item(" buttons", "Electric shock"));
         room8.addItemToRoom(new Item("chair", "Electric "));
+        Enemy Troll = new Enemy ("Troll(A)",10, new Weapon("Arrow",20));
+        room8.addEnemy(Troll );
 
         room9.setEast(null);
         room9.setNorth(room6);

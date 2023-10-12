@@ -46,24 +46,43 @@ public class Adventure {
         return player.showInventory();
     }
 
+
     public ReturnMessage eatFood(String foodToEat) {
         return player.eatFood(foodToEat);
     }
-    public ReturnMessage drink(String liquidToDrink){
+
+    public ReturnMessage tryToEatFood(String tryToEatFood) {
+        return player.tryToEatFood(tryToEatFood);
+    }
+
+    public ReturnMessage drink(String liquidToDrink) {
         return player.drinkLiquid(liquidToDrink);
     }
 
+    public ReturnMessage tryToDrinkLiquid(String tryToDrinkLiquid) {
+        return player.tryTodrinkLiquid(tryToDrinkLiquid);
+    }
 
     public int getPlayerHealth() {
         return player.getHealth();
     }
 
+    public ReturnMessage equipWeapon(String weaponToEquip) {
+      return  player.equipWeapon(weaponToEquip);
 
-    public Item findItem(String name) {
-        return player.findItem(name);
     }
-    public ArrayList<Item> itemsInRoom() {
-        return player.getItemName();
+    public Weapon getEquippedWeapon() {
+        return player.getEquippedWeapon();
     }
+    public int getAmmunition() {
+        return player.getAmmunition();
+    }
+    public int getRemainingUses() {
+        return player.remainingUses();
+    }
+    public int getDamage(){
+        return player.damage();
+    }
+
 
 }

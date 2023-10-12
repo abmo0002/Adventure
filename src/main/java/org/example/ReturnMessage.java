@@ -9,10 +9,19 @@ public enum ReturnMessage {
     REALLY_DRINK,
     NOT_DRINKABLE,
     IS_EQUIPPED,
-    IS_NOT_EQUIPPED,
-    NO_AMMO,
-    IS_NOT_A_WEAPON,
-    ATTACK,
+    NOT_EQUIPPED,
+    NO_AMMUNITION,
+    NOT_A_WEAPON,
+    NO_WEAPON,
+    ATTACK_ENEMY,
+    NO_ENEMY,
+    ENEMY_DIED,
+    PLAYER_DIED,
+    ENEMY_ALIVE,
+    PLAYER_AND_ENEMY_DIED,
+
+
+
 }
 
 

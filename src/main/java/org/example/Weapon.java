@@ -1,21 +1,23 @@
 package org.example;
 
-public abstract class Weapon extends Item {
+public class Weapon extends Item {
     protected int damage;
-    int remainingUses;
-
-
-    public Weapon(String itemName, int damage, int remainingUses) {
-        super(itemName);
+    protected int remainingUses;
+    public Weapon(String name, int damage) {
+        super(name);
         this.damage = damage;
-        this.remainingUses = remainingUses;
     }
 
-    public abstract int getDamage();
+    public int getRemainingUses() {
+        return remainingUses;
+    }
+    public int setRemainingUses(int i){
+        return remainingUses;
+    }
 
-    public abstract int getRemainingUses();
-
-    public abstract void setRemainingUses(int remainingUses);
+    public int getDamage() {
+        return damage;
+    }
 
 
 }
